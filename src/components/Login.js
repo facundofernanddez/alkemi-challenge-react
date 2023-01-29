@@ -1,7 +1,11 @@
 import axios from "axios";
 import swal from "@sweetalert/with-react";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export const Login = () => {
+  const navigate = useNavigate();
+
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -31,11 +35,23 @@ export const Login = () => {
       .then((res) => {
         swal(<h2>Estás dentro!</h2>);
         console.log(res.data);
+        const token = res.data.token;
+        localStorage.setItem("token", token);
+        navigate("/list");
       });
   };
 
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+    if (token) {
+      navigate("/list");
+    }
+  });
+
   return (
     <>
+      {/* {token && redirect("/list")} */}
+
       <h2>Formulario de Login</h2>
       <form onSubmit={submitHandler}>
         <label>
@@ -48,7 +64,9 @@ export const Login = () => {
           <input type="password" name="password" />
         </label>
         <br />
-        <button type="submit">Ingresar</button>
+        <button className="btn  btn-success" type="submit">
+          Ingresar
+        </button>
       </form>
     </>
   );
