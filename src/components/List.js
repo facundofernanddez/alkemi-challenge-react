@@ -1,40 +1,55 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import swal from "@sweetalert/with-react";
 
 export const List = () => {
-  const navigate = useNavigate();
-
   const [moviesList, setMoviesList] = useState([]);
 
+  let token = sessionStorage.getItem("token");
+
   useEffect(() => {
-    let token = localStorage.getItem("token");
     const endpoint =
       "https://api.themoviedb.org/3/discover/movie?api_key=7651fea18601554bdacd7cdd7eb018fc&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate";
-    if (!token) {
-      navigate("/");
-    }
 
-    axios.get(endpoint).then((res) => {
-      const apiData = res.data;
-      setMoviesList(apiData.results);
-    });
+    axios
+      .get(endpoint)
+      .then((res) => {
+        const apiData = res.data;
+        setMoviesList(apiData.results);
+      })
+      .catch((e) => {
+        swal(<h2>Hubo errores intenta mas tarde</h2>);
+      });
   }, [setMoviesList]);
 
   return (
     <>
-      {/* {!token && redirect("/login")} */}
+      {!token && <Navigate to="/" />}
 
       <div className="row">
         {moviesList.map((oneMovie, index) => {
           return (
             <div className="col-4" key={index}>
-              <div className="card">
-                <img src="..." className="card-img-top" alt="..." />
+              <div className="card my-4">
+                <img
+                  src={`https://image.tmdb.org/t/p/w500${oneMovie.poster_path}`}
+                  className="card-img-top"
+                  alt="..."
+                />
                 <div className="card-body">
-                  <h5 className="card-title">Movie title</h5>
-                  <p className="card-text">Movie review</p>
-                  <Link to="" className="btn btn-primary">
+                  <h5 className="card-title">
+                    {oneMovie.title.substring(0, 30)}
+                    ...
+                  </h5>
+                  <p className="card-text">
+                    {oneMovie.overview.substring(0, 100)}
+                    ...
+                  </p>
+                  <Link
+                    to={`/detail?movieID=${oneMovie.id}`}
+                    className="btn btn-primary"
+                  >
                     View detail
                   </Link>
                 </div>
