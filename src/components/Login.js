@@ -1,8 +1,11 @@
 import axios from "axios";
 import swal from "@sweetalert/with-react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export const Login = () => {
+  const navigate = useNavigate("");
+
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -33,6 +36,10 @@ export const Login = () => {
         swal(<h2>Estás dentro!</h2>);
         const token = res.data.token;
         sessionStorage.setItem("token", token);
+        navigate("/list");
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
