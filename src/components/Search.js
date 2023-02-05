@@ -6,8 +6,7 @@ export const Search = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-
-    const keyword = e.currentTarget.keyword.value.trim();
+    let keyword = e.currentTarget.keyword.value.trim();
 
     if (keyword.length === 0) {
       swal(<h5>Tiene que escribir una palabra clave</h5>);
@@ -20,7 +19,7 @@ export const Search = () => {
   };
   return (
     <form className="d-flex align-items-center" onSubmit={submitHandler}>
-      <label className="form-label mb-0 mx-2">
+      <label className="form-label mb-0 mx-2" name="keyword">
         <input
           className="form-control"
           type="text"
