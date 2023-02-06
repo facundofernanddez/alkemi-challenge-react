@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-export const Result = () => {
+export const Result = (props) => {
   let query = new URLSearchParams(window.location.search);
   let keyword = query.get("keyword");
 
@@ -42,6 +42,13 @@ export const Result = () => {
                   className="card-img-top"
                   alt="..."
                 />
+                <button
+                  className="favourite-btn"
+                  onClick={props.addOrRemoveFromFavs}
+                  data-movie-id={oneMovie.id}
+                >
+                  🖤
+                </button>
                 <div className="card-body">
                   <h5 className="card-title">
                     {oneMovie.title.substring(0, 30)}

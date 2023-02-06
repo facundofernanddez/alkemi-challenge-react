@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 //Components
 import { Search } from "./Search";
 
-export const Header = () => {
+export const Header = (props) => {
   return (
     <header>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -23,6 +23,18 @@ export const Header = () => {
               <Link className="nav-link" to="/contact">
                 Contact
               </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/favorites">
+                Favorites
+              </Link>
+            </li>
+            <li className="nav-item d-flex align-items-center">
+              <span className="text-success">
+                {props.favs.length > 0 && (
+                  <>Peliculas en favoritos: {props.favs.length}</>
+                )}
+              </span>
             </li>
           </ul>
           <Search />

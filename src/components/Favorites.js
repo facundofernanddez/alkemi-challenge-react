@@ -1,42 +1,21 @@
-import { Link, Navigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import swal from "@sweetalert/with-react";
+import { Navigate, Link } from "react-router-dom";
 
-export const List = (props) => {
-  const [moviesList, setMoviesList] = useState([]);
-
+export const Favorites = (props) => {
   let token = sessionStorage.getItem("token");
-
-  useEffect(() => {
-    const endpoint =
-      "https://api.themoviedb.org/3/discover/movie?api_key=7651fea18601554bdacd7cdd7eb018fc&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate";
-
-    axios
-      .get(endpoint)
-      .then((res) => {
-        const apiData = res.data;
-        setMoviesList(apiData.results);
-      })
-      .catch((e) => {
-        swal(<h2>Hubo errores intenta mas tarde</h2>);
-      });
-  }, [setMoviesList]);
 
   return (
     <>
       {!token && <Navigate to="/" />}
-
+      <h2>Seccion de favoritos</h2>
       <div className="row">
-        {moviesList.map((oneMovie, index) => {
+        {!props.favs.length && (
+          <div className="col-12 text-danger">No tenes nada en favoritos</div>
+        )}
+        {props.favs.map((oneMovie, index) => {
           return (
             <div className="col-4" key={index}>
               <div className="card my-4">
-                <img
-                  src={`https://image.tmdb.org/t/p/w500${oneMovie.poster_path}`}
-                  className="card-img-top"
-                  alt="..."
-                />
+                <img src={oneMovie.imgURL} className="card-img-top" alt="..." />
                 <button
                   className="favourite-btn"
                   onClick={props.addOrRemoveFromFavs}
