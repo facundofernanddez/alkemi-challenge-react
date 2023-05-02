@@ -1,7 +1,6 @@
 import { Link, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import swal from "@sweetalert/with-react";
 
 export const List = (props) => {
   const [moviesList, setMoviesList] = useState([]);
@@ -19,7 +18,7 @@ export const List = (props) => {
         setMoviesList(apiData.results);
       })
       .catch((e) => {
-        swal(<h2>Hubo errores intenta mas tarde</h2>);
+        <h2>Hubo errores intenta mas tarde</h2>;
       });
   }, [setMoviesList]);
 

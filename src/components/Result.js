@@ -1,4 +1,3 @@
-import swal from "@sweetalert/with-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -17,7 +16,7 @@ export const Result = (props) => {
       .then((response) => {
         let moviesArray = response.data.results;
         if (moviesArray.length === 0) {
-          swal(<h5>Tu busqueda no arrojó resultados</h5>);
+          <h5>Tu busqueda no arrojó resultados</h5>;
         }
         setMoviesResults(moviesArray);
       })
